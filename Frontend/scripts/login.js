@@ -24,9 +24,9 @@ btnLogin.addEventListener("click", (e) => {
     if (user) {
         localStorage.setItem('signedIn', 'true');
         if(user.isAdmin){
-            window.location.href = "./dashboard/main-page.html"
+            window.location.href = "./pages/todo.htm"
         }else{
-            window.location.href = "./index.html";
+            window.location.href = "./pages/todo.html";
         }
     } else {
         alert("Invalid username or password.");
