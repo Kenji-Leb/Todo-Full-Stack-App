@@ -4,3 +4,4 @@ const deleteButton = document.getElementById("delete-button")
 addButton.addEventListener("click", (e) => {
     console.log("clicked")
 })
+

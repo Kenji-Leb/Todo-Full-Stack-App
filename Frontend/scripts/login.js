@@ -20,7 +20,8 @@ const btnLogin = document.getElementById("btn-login");
 // const users = getUsers()
 
 btnLogin.addEventListener("click", (e) => {
-    window.location.assign("/pages/todo.html")
+    window.location.href = "../pages/todo.html";
+    
     // const user = checkCredentials(inputEmail.value, inputPassword.value);
     // if (user) {
     //     localStorage.setItem('signedIn', 'true');
