@@ -5,28 +5,32 @@ const todoInput = document.getElementById("todo-input")
 const taskNameInput = document.getElementById("task-name-input");
 const descriptionInput = document.getElementById("description-input");
 const dateInput = document.getElementById("created-date-input");
+const user = JSON.parse(localStorage.getItem("currentUser"));
+const userId = user.id;
 
 
-
-const loadTasksInList = (container) => {
-    container.innerHTML = "";
-  
-    tasksList.forEach((task) => {
-      container.innerHTML += generateTaskCard(task);
-    });
+const loadTasksInList = (container, userId) => {
+    const users = getUsers();
+    const user = users.find(user => user.id === userId);
+    if (user) {
+        container.innerHTML = "";
+        user.tasksList.forEach((task) => {
+            container.innerHTML += generateTaskCard(task);
+        });
+    }
 };
 
-addButton.addEventListener("click", async () => {
 
+addButton.addEventListener("click", async () => {
     const newTask = {
-    id: Math.floor(Math.random() * 1000),
-    taskName: taskNameInput.value,
-    description: descriptionInput.value,
-    createdDate: new Date().toISOString().split('T')[0],
+        id: Math.floor(Math.random() * 1000),
+        taskName: taskNameInput.value,
+        description: descriptionInput.value,
+        createdDate: new Date().toISOString().split('T')[0],
     };
 
-    createTask(newTask);
-    loadTasksInList(totalList);
+    createTask(newTask, userId);
+    loadTasksInList(totalList, userId);
 
     taskNameInput.value = "";
     descriptionInput.value = "";
@@ -35,9 +39,15 @@ addButton.addEventListener("click", async () => {
 
 
 deleteButton.addEventListener("click", () => {
-    tasksList.splice(0, tasksList.length);
-    loadTasksInList(totalList);
+    const user = getUsers().find(user => user.id === userId);
+    if (user) {
+        user.tasksList = [];
+        saveTasks(user.tasksList, userId);
+        loadTasksInList(totalList, userId);
+    }
 });
+
+
 
 
 const generateTaskCard = (task) => {
@@ -63,4 +73,4 @@ const generateTaskCard = (task) => {
   };
 
 
-loadTasksInList(totalList);
+loadTasksInList(totalList, userId);

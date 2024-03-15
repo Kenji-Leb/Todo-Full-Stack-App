@@ -5,14 +5,19 @@ const addToLocalStorage = (key, newData) => {
     newData.id = lastId + 1;
     existingData.push(newData);
     localStorage.setItem(key, JSON.stringify(existingData));
-    console.log("Auto-incremented ID:", newData.id);
   };
 
 
 const getFromLocalStorage = (key) =>
   JSON.parse(localStorage.getItem(key)) || [];
 
-const addUser = (user) => 
-  addToLocalStorage("users", user);
+const addUser = (user) => {
+    const newUser = {
+        ...user,
+    };
+    addToLocalStorage("users", newUser);
+    return newUser;
+};
+
 
 const getUsers = () => getFromLocalStorage("users");

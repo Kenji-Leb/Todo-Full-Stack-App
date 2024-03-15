@@ -2,34 +2,44 @@ const getTasks = () => {
     const data = localStorage.getItem("tasksList");
     let tasks;
   
-    if (data) {
-        tasks = JSON.parse(data);
-    } else {
-      localStorage.setItem("tasksList", "[]");
-      tasks = [];
-    }
+    tasks = JSON.parse(data);
   
     return tasks;
-  };
+};
   
-  const getTask = (id) => {
+const getTask = (id) => {
     const found = tasksList.find((task) => id === task.id);
   
     return found;
   };
   
-  const createTask = (task) => {
-    tasksList.push(task);
+const createTask = (task, userId) => {
+    const users = getUsers();
+    const userIndex = users.findIndex(user => user.id === userId);
+    if (userIndex !== -1) {
+        const updatedUser = {
+            ...users[userIndex],
+            tasksList: [...users[userIndex].tasksList, task]
+        };
+        users[userIndex] = updatedUser;
+        localStorage.setItem("users", JSON.stringify(users));
+    }
+};
+
   
-    saveTasks();
-  };
-  
-  const saveTasks = (list) => {
-    localStorage.setItem(
-      "tasksList",
-      JSON.stringify(list ?? tasksList)
-    );
-  };
-  
-  let tasksList = getTasks();
+const saveTasks = (list, userId) => {
+  const users = getUsers();
+  const userIndex = users.findIndex(user => user.id === userId);
+  if (userIndex !== -1) {
+      const updatedUser = {
+          ...users[userIndex],
+          tasksList: list
+      };
+      users[userIndex] = updatedUser;
+      localStorage.setItem("users", JSON.stringify(users));
+  }
+};
+
+
+let tasksList = getTasks();
   

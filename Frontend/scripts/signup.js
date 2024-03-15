@@ -8,9 +8,11 @@ btnSignup.addEventListener("click", (e) => {
     const user = {
         username: inputUsername.value,
         email: inputEmail.value,
-        password: inputPassword.value
+        password: inputPassword.value,
+        tasksList: [],
     }
-    
-    addUser(user);
+
+    const newUser = addUser(user);
+    localStorage.setItem("currentUser", JSON.stringify(newUser));
     window.location = "./login.html";
 });
