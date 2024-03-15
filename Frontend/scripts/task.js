@@ -7,12 +7,7 @@ const getTasks = () => {
     return tasks;
 };
   
-const getTask = (id) => {
-    const found = tasksList.find((task) => id === task.id);
-  
-    return found;
-  };
-  
+
 const createTask = (task, userId) => {
     const users = getUsers();
     const userIndex = users.findIndex(user => user.id === userId);
