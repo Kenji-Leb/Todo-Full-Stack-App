@@ -2,7 +2,7 @@
 include('connection.php');
 
 
-$name = $_POST['name'];
+$username = $_POST['username'];
 $email = $_POST['email'];
 $password = $_POST['password'];
 
@@ -15,7 +15,7 @@ $email_exists = $check_email->num_rows();
 
 if ($email_exists == 0) {
     $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-    $query = $mysqli->prepare('insert into users(name,password,email) values(?,?,?);');
+    $query = $mysqli->prepare('insert into users(username,password,email) values(?,?,?);');
     $query->bind_param('sss', $name, $hashed_password, $email);
     $query->execute();
     $response['status'] = "success";
