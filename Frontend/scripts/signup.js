@@ -9,10 +9,20 @@ btnSignup.addEventListener("click", (e) => {
         username: inputUsername.value,
         email: inputEmail.value,
         password: inputPassword.value,
-        tasksList: [],
-    }
+    };
 
-    const newUser = addUser(user);
-    localStorage.setItem("currentUser", JSON.stringify(newUser));
-    window.location = "./login.html";
+    fetch('localhost/todo_backend/signup.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        localStorage.setItem("currentUser", JSON.stringify(data));
+        window.location = "./login.html";
+    })
+    .catch(error => console.error('Error:', error));
 });
