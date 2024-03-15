@@ -1,10 +1,10 @@
-function checkCredentials(email, password) {
+function checkCredentials(inputUsername, password) {
     const users = getUsers();
 
     console.log(users);
     for (let i = 0; i < users.length; i++) {
         const user = users[i];
-        if (user.email === email && user.password === password) {
+        if (user.username === inputUsername && user.password === password) {
             return { id: user.id, isAdmin: user.isAdmin };
         }
     }
@@ -12,25 +12,20 @@ function checkCredentials(email, password) {
     return null;
 }
 
-const inputEmail = document.getElementById("input-email");
+const inputUsername = document.getElementById("input-username");
 const inputPassword = document.getElementById("input-password");
 
 const btnLogin = document.getElementById("btn-login");
 
-// const users = getUsers()
+const users = getUsers()
 
 btnLogin.addEventListener("click", (e) => {
-    window.location.href = "../pages/todo.html";
     
-    // const user = checkCredentials(inputEmail.value, inputPassword.value);
-    // if (user) {
-    //     localStorage.setItem('signedIn', 'true');
-    //     if(user.isAdmin){
-    //         window.location.href = "./pages/todo.html"
-    //     }else{
-    //         window.location.href = "./pages/todo.html";
-    //     }
-    // } else {
-    //     alert("Invalid username or password.");
-    // }
+    const user = checkCredentials(inputUsername.value, inputPassword.value);
+    if (user) {
+        localStorage.setItem('signedIn', 'true');
+        window.location.href = "../pages/todo.html"
+    } else {
+        alert("Invalid username or password.");
+    }
 });
