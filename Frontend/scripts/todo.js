@@ -14,34 +14,7 @@ const loadTasksInList = (container) => {
     tasksList.forEach((task) => {
       container.innerHTML += generateTaskCard(task);
     });
-  
-    const taskCards = document.querySelectorAll(".task-card");
-  
-    taskCards.forEach((task) => {
-        task.addEventListener("click", () => {
-        const selected = task.getAttribute("task-id");
-  
-        localStorage.setItem("current-selected", selected);
-  
-        const task = gettask(parseInt(selected));
-  
-        const { id, type, amount, description, currency } = task;
-  
-        oldAmount = amount;
-        oldCurrency = currency;
-  
-        taskNameInput.value = amount;
-        descriptionInput.value = description;
-        dateInput.value = type;
-        currencySelect.value = JSON.stringify(currency);
-  
-  
-        addButton.innerText = "Edit";
-      });
-    });
-  };
-
-
+};
 
 addButton.addEventListener("click", async () => {
 
@@ -49,17 +22,28 @@ addButton.addEventListener("click", async () => {
     id: Math.floor(Math.random() * 1000),
     taskName: taskNameInput.value,
     description: descriptionInput.value,
-    createdDate: new Date(),
+    createdDate: new Date().toISOString().split('T')[0],
     };
 
     createTask(newTask);
     loadTasksInList(totalList);
+
+    taskNameInput.value = "";
+    descriptionInput.value = "";
+    dateInput.value = "";
 });
+
+
+deleteButton.addEventListener("click", () => {
+    tasksList.splice(0, tasksList.length);
+    loadTasksInList(totalList);
+});
+
 
 const generateTaskCard = (task) => {
     const { id, taskName, description, createdDate, completed } = task;
   
-    return `<li class="list-group-item" task-id=${id}>
+    return `<li class="list-group-item task-card" task-id=${id}>
                 <div class="d-flex justify-content-between">
                     <div>
                         <h5 class="mb-1">${taskName}</h5>
@@ -79,4 +63,4 @@ const generateTaskCard = (task) => {
   };
 
 
-  loadTasksInList(totalList);
+loadTasksInList(totalList);

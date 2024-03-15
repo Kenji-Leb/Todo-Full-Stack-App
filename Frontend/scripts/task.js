@@ -24,16 +24,6 @@ const getTasks = () => {
     saveTasks();
   };
   
-  const deleteTask = (id) => {
-    const filtered = tasksList.filter(
-      (task) => id !== task.id
-    );
-  
-    saveTasks(filtered);
-  
-    tasksList = filtered;
-  };
-  
   const saveTasks = (list) => {
     localStorage.setItem(
       "tasksList",
